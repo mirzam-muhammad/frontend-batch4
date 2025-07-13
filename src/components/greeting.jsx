@@ -2,7 +2,7 @@ import { ProfileCard } from "./profileCard"
 
 function KataMutiara({nama, asal}) {
     const text = `Ini kata mutiara untuk ${nama} yang berasal dari ${asal} untuk hari ini`
-    const imgUrl = `https://www.pa-selayar.go.id/images/PAS_FOTO/MIRZAM.jpg`
+    const imgUrl = `https:placehold.co/400`
     const userJob = "Pranata Komputer"
     
     return (
