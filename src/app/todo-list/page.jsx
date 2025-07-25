@@ -4,7 +4,7 @@ import {TodoProvider} from '@/context/todoContext'
 import TodoInput from "@/components/todoComponents/TodoInput";
 import TodoList from "@/components/todoComponents/todoList";
 
-export default function Home() {
+export default function TodoHome() {
 
   return (
     <TodoProvider>
