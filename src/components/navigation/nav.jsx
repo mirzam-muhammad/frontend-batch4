@@ -12,6 +12,7 @@ export default function Nav() {
     { label: "Hello", to: "/hello" },
     { label: "Form", to: "/form" },
     { label: "Bubling", to: "/bubling" },
+    { label: "Counter", to: "/counter" }
   ];
 
   return (
