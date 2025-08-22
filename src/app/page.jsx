@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
-import { TextField, Button, Box, Typography, Container, Paper, Link } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Box, Button, TextField, Typography, Container, Paper } from "@mui/material";
 
-export default function LoginForm() {
+export default function Home() {
+  const router = useRouter();
   const [form, setForm] = useState({ username: "", password: "" });
   const [message, setMessage] = useState(null);
-  const router = useRouter();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,18 +21,22 @@ export default function LoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const { message } = await res.json();
-      setMessage(message);
+
+      const {message, data} = await res.json();
+      setMessage(`${message}: ${data}`);
+
+      if (res.ok) {
+        router.push("/kata");
+      }
     } catch (error) {
-      console.error("Error during login", error);
+      console.error("Login failed:", error);
     }
-    console.log("Login:", form);
   };
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
       <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
-        <Typography variant="h5" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
           Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -40,7 +45,6 @@ export default function LoginForm() {
             name="username"
             value={form.username}
             onChange={handleChange}
-            variant="outlined"
             required
             fullWidth
           />
@@ -50,21 +54,21 @@ export default function LoginForm() {
             type="password"
             value={form.password}
             onChange={handleChange}
-            variant="outlined"
             required
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" fullWidth>
             Login
           </Button>
         </Box>
-        <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
-          {message && message}
-        </Typography>
-        <Box sx={{ mt: 3, textAlign: "center" }}>
-          <Link href="/register" underline="hover">
-            Don't have an account? Register
-          </Link>
+        <p>{message && message}</p>
+        <Box sx={{ mt: 2, textAlign: "center" }}>
+          <Typography variant="body2">
+            Don't have an account?{" "}
+            <Link href="/register" style={{ color: "#1976d2", textDecoration: "none" }}>
+              Register
+            </Link>
+          </Typography>
         </Box>
       </Paper>
     </Container>
